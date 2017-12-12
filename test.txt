@@ -6,7 +6,7 @@ Library     SeleniumLibrary
 
 Open Browser To Main Page
     Open Browser   https://www.lupapiste.fi   ff
-    Title Should Be     
+    Title Should Be     Lupapiste
 
 Close Browser
     Close Browser
