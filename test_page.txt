@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+
+*** Settings ***
+
+
+Resource       resources.txt
+
+Suite Setup     Open Browser To Main Page
+Suite Teardown  Terminate Browsers
+
+
+
+*** Test cases ***
+
+Open Browser To SUT
+    Open Browser To Main Page
+    Location Should Be   https://www.lupapiste.fi/
+    Close Browser
+
+
+Logo Exist
+    Open Browser To Main Page
+    Page Should Contain Image    css=.logo
+    Close Browser
+    
+
+Change Language
+    Open Browser To Main Page
+    ${lang_selector} =  Set Variable   .language-menu > a:nth-child(1) > span:nth-child(1)
+    Page Should Contain Element   css=${lang_selector}
+    Click Element   css=${lang_selector}
+    Wait Until Element Is Visible    header-menu
+    ${lang_sv} =  Set Variable   .language-menu-list > li:nth-child(2) > a:nth-child(1)
+    Click Link   css=${lang_sv}
+    Wait Until Page Contains Element    header
+    Location Should Be    https://www.lupapiste.fi/sv/
+    Close Browser
+    Open Browser To Main Page
+
+
+Test Navigation Menu
+    [Documentation]     Navigate using menu from main -> palveluinfo -> luvanhakija -> main
+    Open Browser To Main Page
+    ${menu} =  Set Variable    .menu-open > a:nth-child(2) > span:nth-child(2)
+    Page Should Contain Element    css=${menu}
+    Click Element    css=${menu}
+    Wait Until Element Is Visible    header-menu
+    ${link_palveluinfo} =   Set Variable   div.menu-column:nth-child(2) > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)
+    Click Link    css=${link_palveluinfo}
+    Wait Until Page Contains Element    header
+    Location Should Be   https://www.lupapiste.fi/palveluinfo
+    Click Element    css=${menu}
+    Wait Until Element Is Visible    header-menu
+    ${link_luvanhakija} =   Set Variable   div.header-container:nth-child(1) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)
+    Click Link  css=${link_luvanhakija}
+    Wait Until Page Contains Element    header
+    Location Should Be   https://www.lupapiste.fi/luvanhakija
+    Click Element    css=${menu}
+    Wait Until Element Is Visible    header-menu
+    ${link_home} =   Set Variable   div.header-container:nth-child(1) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)
+    Click Link   css=${link_home}
+    Wait Until Page Contains Element    header
+    Location Should Be    https://www.lupapiste.fi/
+    Close Browser
+
+
+
+

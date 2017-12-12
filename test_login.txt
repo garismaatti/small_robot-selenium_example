@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+
+*** Settings ***
+
+#Library     Selenium2Library
+
+Resource       resources.txt
+
+Suite Setup     Open Browser To Main Page
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+
+# not actual valid username & pass
+${user_name}    user
+${user_pass}    user123
+${user_name_invalid}    testuser
+${user_pass_invalid}    testuser
+
+
+*** Test cases ***
+
+Open Browser To SUT
+    Location Should Be   https://www.lupapiste.fi/
+
+
+Invalid Crenitials
+    Wait Until Page Contains Element   //*[@id="login-username"]
+    Input Text   //*[@id="login-username"]     ${user_name_invalid}
+    Input Text   //*[@id="login-password"]     ${user_pass_invalid}
+    Click Element   //*[@id="login-button"]
+    Element Should Be Visible   //*[@id="login-message"]
+
+Valid Crenitials
+    Wait Until Page Contains Element   //*[@id="login-username"]
+    Input Text   //*[@id="login-username"]      ${user_name}
+    Input Text   //*[@id="login-password"]      ${user_pass}
+    Click Element   //*[@id="login-button"]
+    Element Should Not Be Visible   //*[@id="login-message"]
+
+
+

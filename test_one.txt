@@ -1,0 +1,26 @@
+*** Settings ***
+
+Library     SeleniumLibrary
+#Suite Setup     Open  Browser To Main Page
+#Suite Teardown  Close Browser
+
+
+*** Variables ***
+
+${MAIN_URL}     https://www.lupapiste.fi
+${BROWSER}      chrome
+${MAIN_TITLE}   Lupapiste
+${SPEED}        1
+
+*** Test cases ***
+
+Open Browser To Main Page
+    Open Browser   ${MAIN_URL}   ${BROWSER}
+    Title Should Be     ${MAIN_TITLE}
+    Set Selenium Speed  ${SPEED}
+    
+
+Close Browser
+    Close Browser
+
+

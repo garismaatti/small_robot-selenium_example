@@ -1,0 +1,13 @@
+
+*** Settings ***
+Library     SeleniumLibrary
+
+*** Test cases ***
+
+Open Browser To Main Page
+    Open Browser   https://www.lupapiste.fi   ff
+    Title Should Be     
+
+Close Browser
+    Close Browser
+
